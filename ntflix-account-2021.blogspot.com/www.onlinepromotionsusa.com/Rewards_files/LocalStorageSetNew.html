@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<!-- saved from url=(0082)https://www.clicken.us/tag/LocalStorageSetNew.html?1=1&vid=fLsd-usxJmKjIXLLoWk0hA2 -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Set local storage for the client</title>
+    <script>
+        function GetURLParam(pURL, sParamName)
+        {
+            if (sParamName.length == 0) return '';
+            var regex = '[?&]' + sParamName + '=([^&#]*)';
+            var results = (new RegExp(regex, "i")).exec(pURL);
+            if (results) {
+                try { return results[1].trim(); } catch (ex) { return ""; }
+            }
+            return '';
+        }
+        try {
+            var sURL = window.location.href;
+            var sToken = GetURLParam(sURL, "uitoken");
+            if (sToken != "") {
+                localStorage.setItem("af_UI_Token", sToken);
+                //console.log("Token logged: " + sToken);
+            } else {
+                //console.log("Missing token");
+            }
+            var sEmail = GetURLParam(sURL, "email");
+            if (sEmail != "" && sEmail.indexOf("@") != -1) {
+                sEmail = sEmail.toLowerCase();
+                localStorage.setItem("af_UserInfo_Email", sEmail);
+                //console.log("Email logged: " + sEmail);
+            } else {
+                //console.log("Invalid email");
+            }
+            var usrVID = localStorage.getItem("af_UI_VID");
+            if (usrVID == null || usrVID == "") {
+                var sVID = GetURLParam(sURL, "vid");
+                if (sVID != "") {
+                    localStorage.setItem("af_UI_VID", sVID);
+                }
+            }
+            var usrFirstLoggedTime = localStorage.getItem("af_UserInfo_FirstLoggedTime");
+            if (usrFirstLoggedTime == null || usrFirstLoggedTime == "") {
+                localStorage.setItem("af_UserInfo_FirstLoggedTime", new Date());
+            }
+        } catch (ex) { console.log("Err"); }
+    </script>
+</head>
+<body>
+
+</body></html>
